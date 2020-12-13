@@ -1,4 +1,8 @@
 configuration {
 theme: "~/.cache/wal/colors-rofi-dark.rasi";
+sidebar-mode:     false;
+drun-icon-theme:  "Papirus";
+show-icons:       true;
+
 }
 
