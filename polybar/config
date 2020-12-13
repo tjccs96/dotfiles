@@ -9,7 +9,7 @@
 ;=====================================================
 
 [colors]
-background = ${xrdb:color0:#222}
+background = "#B3000000"
 foreground = ${xrdb:color7:#222}
 foreground-alt = ${xrdb:color7:#222}
 primary = ${xrdb:color1:#222}
@@ -44,10 +44,11 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = Hack-Regular:size=9;1
+font-0 = JetBrains Mono:size=9;1
 font-1 = Font Awesome 5 Free:pixelsize=10;0
 font-2 = Font Awesome 5 Free Solid:pixelsize=10;0
 font-3 = Font Awesome 5 Brands:pixelsize=10;0 
+font-4 = adobe-source-han-sans-cn:pixelsize=10;0
 
 modules-left = i3
 modules-center = xwindow
@@ -129,7 +130,7 @@ wrapping-scroll = false
 
 ; ws-icon-[0-9]+ = label;icon
 ; NOTE: The label needs to match the name of the i3 workspace
-ws-icon-0 = 1;1: 龜
+ws-icon-0 = 1;1: 一
 ws-icon-1 = 2;2: 
 ws-icon-2 = 3;3: 
 ws-icon-3 = 4;4: 
