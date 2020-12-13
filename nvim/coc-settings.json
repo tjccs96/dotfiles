@@ -5,5 +5,14 @@
       "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
       "filetypes": ["c", "cpp", "objc", "objcpp"]
     }
-}
+},
+"diagnostic.displayByAle": {
+  "type": "boolean",
+  "default": "true"
+},
+
+"python.jediEnabled": false,
+
+"rust-analyzer.enable": true,
+"rust-analyzer.checkOnSave.command": "clippy"
 }

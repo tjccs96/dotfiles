@@ -22,10 +22,18 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
 set history=500
-set number
+"set number
+" turn hybrid line numbers on
+set number relativenumber
+set nu rnu
+
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
+
+map <F12> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -81,7 +89,7 @@ endif
 set ruler
 
 " Height of the command bar
-set cmdheight=2
+set cmdheight=3
 
 " A buffer becomes hidden when it is abandoned
 set hid
@@ -126,15 +134,17 @@ map <C-n> :NERDTreeToggle<CR>
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
-syntax enable 
+syntax on
 
 " Color Scheme
 
+"set background=dark
+"let g:monotone_contrast_factor = 2.0
+"colorscheme monotone
 colorscheme spacegray
-set background=dark
 
 " Vim airline
-let g:airline_theme='onedark'
+let g:airline_theme='monochrome'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
 
@@ -287,7 +297,7 @@ function! <SID>BufcloseCloseIt()
    endif
 endfunction
 
-nmap <F8> :TagbarToggle<CR>
+" nmap <F8> :TagbarToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Python Specific and plugins
@@ -324,6 +334,7 @@ Plug 'airblade/vim-gitgutter'
 "Completion
 "Plug 'davidhalter/jedi-vim'
 "Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+"Plug 'lervag/vimtex'
 
 "Interface
 Plug 'scrooloose/nerdtree'
@@ -333,12 +344,20 @@ Plug 'flazz/vim-colorschemes'
 Plug 'sheerun/vim-polyglot'
 Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'puremourning/vimspector'
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+Plug 'fxn/vim-monochrome'
 
 "Linting
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'w0rp/ale'
 
-
+Plug 'chriskempson/base16-vim'
+Plug 'sainnhe/gruvbox-material'
+Plug 'colepeters/spacemacs-theme.vim'
 "if has('nvim')
 "  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "else
@@ -406,6 +425,8 @@ let g:jedi#completions_command = "<C-Space>"
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
+" debugger keybinds
+let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 
 """ C++ 
 " Toggle tagbar
@@ -447,7 +468,54 @@ endfunction
 nmap <leader>cr  <Plug>(coc-rename)
 
 " Ale stuff
-
+map <leader>at :ALEToggle<CR>
 
 """ End ale
 nnoremap <CR> :noh<CR><CR>
+
+" This is the default extra key bindings
+" let g:fzf_action = {
+"  \ 'ctrl-t': 'tab split',
+"  \ 'ctrl-x': 'split',
+"  \ 'ctrl-v': 'vsplit' }
+
+" An action can be a reference to a function that processes selected lines
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  copen
+  cc
+endfunction
+
+" FZF
+let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - down / up / left / right
+let g:fzf_layout = { 'down': '~20%' }
+
+" Customize fzf colors to match your color scheme
+" - fzf#wrap translates this to a set of `--color` options
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" Enable per-command history
+" - History files will be stored in the specified directory
+" - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
+"   'previous-history' instead of 'down' and 'up'.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
