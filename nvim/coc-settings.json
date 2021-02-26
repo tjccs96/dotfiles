@@ -6,13 +6,18 @@
       "filetypes": ["c", "cpp", "objc", "objcpp"]
     }
 },
-"diagnostic.displayByAle": {
-  "type": "boolean",
-  "default": "true"
-},
 
 "python.jediEnabled": false,
 
+"rust-analyzer.updates.channel": "nightly",
 "rust-analyzer.enable": true,
-"rust-analyzer.checkOnSave.command": "clippy"
+"rust-analyzer.checkOnSave.command": "clippy",
+
+"explorer.width": 30,
+"explorer.icon.enableNerdfont": true,
+"explorer.previewAction.onHover": false,
+"explorer.keyMappings.global": {
+    "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"],
+    "v": "open:vsplit"
+}
 }
